@@ -1,6 +1,6 @@
 #### Nick Mattson's Class Repository for OCN-682
 
-**Dept:** Botany
+**Dept:** Botany  
 **Degree Track** MS
 
 [Syllabus for Fall 2026](https://lamaku.hawaii.edu/d2l/le/content/176866/viewContent/4519241/View)
