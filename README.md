@@ -8,6 +8,9 @@ of native plant communities to novel ecological stressors will impact planning a
 These dynamics are often poorly understood and new findings may change the way we understand  
 anthropogenic impacts on ecological systems.
 
+<img src="images/Profile_Picture.jpg" alt="Conducting field research" width="300">
+
+
 [Syllabus for Fall 2026](https://lamaku.hawaii.edu/d2l/le/content/176866/viewContent/4519241/View)
 
 The purpose of this repository is:
