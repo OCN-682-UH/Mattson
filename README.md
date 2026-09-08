@@ -1,7 +1,12 @@
 #### Nick Mattson's Class Repository for OCN-682
 
 **Dept:** Botany  
-**Degree Track:** MS
+**Degree Track:** MS  
+**Research Interests** I am interested in community ecology, specifically vegetation dynamics  
+following disturbance events. In a world impacted by climate change, understanding the responses  
+of native plant communities to novel ecological stressors will impact planning and policy decisions.  
+These dynamics are often poorly understood and new findings may change the way we understand  
+anthropogenic impacts on ecological systems.
 
 [Syllabus for Fall 2026](https://lamaku.hawaii.edu/d2l/le/content/176866/viewContent/4519241/View)
 
