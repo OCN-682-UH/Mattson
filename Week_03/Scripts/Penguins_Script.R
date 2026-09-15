@@ -4,6 +4,7 @@
 ########################################################
 
 ###Load Libraries###
+library(here)
 library(palmerpenguins)
 library(tidyverse)
 glimpse(penguins)
@@ -25,6 +26,6 @@ ggplot(data=penguins,
   scale_fill_viridis_d()
 
 ###save plot as image file###
-ggsave(here("Week_03","Outputs", "Penguins_Histogram.png"))
+ggsave(here("Week_03","Outputs","Penguins_Histogram.png"))
 
 
