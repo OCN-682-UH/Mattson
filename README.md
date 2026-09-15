@@ -26,5 +26,6 @@ Thesis data design
  
  Weekly Folders:
 * [Week 2](https://github.com/OCN-682-UH/Mattson/tree/main/Week_02)
+* [Week 3](https://github.com/OCN-682-UH/Mattson/tree/main/Week_03)
  
  *Last edited by Nick Mattson on 9-8-2026*
