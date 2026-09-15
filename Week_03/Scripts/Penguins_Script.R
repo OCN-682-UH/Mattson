@@ -16,7 +16,7 @@ head(penguins)
 ggplot(data=penguins,
        mapping = aes(x = body_mass_g,
                      fill = species))+
-  geom_histogram(bins = 30, alpha = 0.4, position = "dodge")+
+  geom_histogram(binwidth = 140, alpha = 0.4, position = "dodge")+
   theme_classic()+
   labs(title = "Penguin Abundance by Species and Body Mass",
        subtitle = "Comparison of Adelie, Gentoo, and Chinstrap Penguins",
