@@ -25,6 +25,6 @@ ggplot(data=penguins,
   scale_fill_viridis_d()
 
 ###save plot as image file###
-ggsave("Penguins_Histogram.png")
+ggsave(here("Week_03","Outputs", "Penguins_Histogram.png"))
 
 
