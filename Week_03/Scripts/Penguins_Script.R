@@ -23,6 +23,7 @@ ggplot(data=penguins,
        caption = "Palmer Station LTER/ palmerpenguins package")+
   scale_fill_viridis_d()
 
-
+###save plot as image file###
+ggsave("Penguins_Histogram.png")
 
 
