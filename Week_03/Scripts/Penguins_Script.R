@@ -25,7 +25,11 @@ ggplot(data=penguins,
        caption = "Palmer Station LTER/ palmerpenguins package")+
   scale_fill_viridis_d()+
   scale_x_continuous(breaks = c(2500,3000,3500,4000,4500,5000,5500,6000,6500),
-                     labels = c("2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5"))
+                     labels = c("2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5"))+
+  theme(axis.title = element_text(size = 12),
+        plot.title = element_text(size=16, face = "bold"),
+        plot.subtitle = element_text(size=14),
+        plot.caption = element_text(size=8,face = "italic"))
 
 ###save plot as image file###
 ggsave(here("Week_03","Outputs","Penguins_Histogram.png"))
