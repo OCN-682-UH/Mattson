@@ -45,7 +45,7 @@ ggplot(penguins_altered_table, aes(x=island,y=log_body_mass,color=species))+
        color = "Species",
        caption = "Note: not all penguin species found on all islands")+
   
-  theme(axis.title = element_text(size = 12),
+  theme(axis.title = element_text(size = 10),
         plot.title = element_text(size=16, face = "bold"),
         plot.subtitle = element_text(size=14),
         plot.caption = element_text(size=8,face = "italic"))
