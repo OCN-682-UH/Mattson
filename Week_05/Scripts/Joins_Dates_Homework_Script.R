@@ -8,7 +8,7 @@ library(here)
 library(tidyverse)
 library(lubridate)
 library(ggplot2)
-library(patchwork) #found this extra package on R Graph Gallery website
+library(patchwork) 
 
 ###Load in the Data###
 CondData <- read_csv(here("Week_05", "Data", "CondData.csv")) #conditions data
@@ -88,9 +88,7 @@ p4 <-  ggplot(CondDepthData_Means, aes(x=datetime_minute, y=Depth)) +
        y="Depth (m)")+
   theme(axis.title = element_text(size = 10))
   
-Combined_Plot <- (p1+p2+p3+p4) #use patchwork package to stitch plots
-
-Final_Plot <- Combined_Plot+
+Combined_Plot <- (p1+p2+p3+p4)+ #use patchwork package to stitch plots
             plot_annotation(title="Environmental Variables Measured Across Day", 
             subtitle = "Top/Bottom 2.5% of Outlier Values Removed",
             caption = "Data from Becker et al. 2020") 
