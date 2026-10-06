@@ -1,0 +1,127 @@
+---
+title: "Diamonds Are Forever (Week 6 Homework)"
+author: "Nick Mattson"
+format:
+  html:
+    theme: darkly
+    code-fold: true
+    code-summary: "Show code"
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+# Load Libraries
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(kableExtra)
+
+# Let's use the diamonds dataset
+diamondsdata <- ggplot2::diamonds
+
+diamonds_filtered <- diamondsdata |>
+  filter(carat <= 3) # apply filter to reduce dataset for analysis
+
+diamonds_mean_price <- diamonds_filtered |>
+  group_by(cut, carat) |>
+  summarise(mean_price = mean(price, na.rm = TRUE)) #summary table
+```
+
+The scatterplot below shows the average price in dollars of the `r n_distinct(diamonds_mean_price$cut)` standard cuts of diamond sold on the market, adjusted to carat size. In the original dataset, `r nrow(diamondsdata)` individual gemstones were observed to create this dataset. To remove outliers and make the data more interpretable, the analysis is limited to stones less than 3 carats. This reduced the dataset to `r nrow(diamonds_filtered)` observations.
+
+```{r}
+#| label: fig-diamond_plot
+#| out-width: "75%"
+#| fig-cap: Average Diamond Price by Cut
+
+#scatterplot of gemstones
+ggplot(diamonds_mean_price, aes(x = carat, y = mean_price, color = cut)) +
+  geom_point(alpha = 0.5) +
+  theme_grey() +
+  labs(x = "Carat Size",
+       y = "Average Price (Dollars)",
+       color = "Carat Size",
+       caption = "Data from ggplot2 Diamonds package") + 
+  scale_color_discrete() +
+  theme(axis.title = element_text(size = 10),
+        plot.title = element_text(size = 16, face = "bold"),
+        plot.subtitle = element_text(size = 14),
+        plot.caption = element_text(size = 8, face = "italic"))
+```
+
+As you can see in @fig-diamond_plot, there is disagreement on how to properly price stones of larger carat size. For stones under one carat, there is a much stronger correlation between carat size and average price. As carat size increases beyond one carat, there is much less consensus on how to accurately price stones.
+
+```{r}
+#| label: tbl-diamond_variance_one_carat
+#| out-width: "75%"
+#| tbl-cap: Average Price and Variance for Diamonds 1 Carat or Less
+
+#table showing values for smaller gemstones
+diamonds_filtered |>
+  filter(carat <= 1) |>
+  group_by(cut) |>
+  summarise(mean_price = mean(price, na.rm = TRUE),
+            price_sd = sd(price, na.rm = TRUE)) |>
+  kbl(col.names = c("Cut", "Avg. Price (\\$)", "Standard Deviations"),
+      align = "lrr",                                
+      digits = 2,
+      escape = FALSE) |>
+  kable_styling(full_width = FALSE) |>
+  row_spec(color="white",background="transparent",0, bold = TRUE)
+```
+
+Note that the number of standard deviations in @tbl-diamond_variance_one_carat are lower than those in Table 2 below, which shows average price and standard deviations for stones greater than 1 carat.
+
+```{r}
+#| label: tbl-diamond_variance_multiple_carat
+#| out-width: "75%"
+#| tbl-cap: Average Price and Variance for Diamonds Larger than 1 Carat
+
+#table showing values for larger gemstones
+diamonds_filtered |>
+  filter(carat >= 1) |>
+  group_by(cut) |>
+  summarise(mean_price = mean(price, na.rm = TRUE),
+            price_sd = sd(price, na.rm = TRUE)) |>
+  kbl(col.names = c("Cut", "Avg. Price (Dollars)", "Standard Deviations"),
+      align = "lrr",                                
+      digits = 2,
+      escape = FALSE) |>
+  kable_styling(full_width = FALSE) |>
+  row_spec(color="white",background="transparent",0, bold = TRUE)
+```
+
+As you can see by comparing @tbl-diamond_variance_one_carat with @tbl-diamond_variance_multiple_carat, stones above one carat have a much larger distribution, indicating disagreements in the market on how to price such stones.
+
+```{r}
+#| label: fig-diamond_variance_plot
+#| out-width: "75%"
+#| fig-cap: Price Distribution by Cut and Carat Class
+#| fig-height: 10
+#| fig-width: 8
+
+# Create new dataframe splitting diamonds above and below 1 carat
+diamonds_with_classes <- diamonds_filtered |>
+  mutate(carat_class = if_else(carat <= 1, "1 Carat or Less", "1 Carat or More"))
+
+# Ggplot histogram showing distribution of gemstones
+ggplot(diamonds_with_classes, aes(x = price, fill = cut)) +
+  geom_histogram(bins = 30, color = "white", alpha = 0.8) +
+  facet_grid(cut ~ carat_class, scales = "free_y") + 
+  scale_fill_viridis_d(option = "viridis") +
+  labs(subtitle = "Comparing Diamonds ≤ 1 carat vs. ≥ 1 carat",
+    x = "Price (Dollars)",
+    y = "Number of Diamonds",
+    fill = "Cut"
+  ) +
+  theme_minimal() +
+  theme(
+    strip.text = element_text(face = "bold", size = 10), 
+    legend.position = "none"
+  )
+```
+
+In order to ensure a good price on larger stones (above 3 carats), hiring a gemstone expert is recommended.
