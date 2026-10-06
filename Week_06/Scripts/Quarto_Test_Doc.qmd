@@ -5,8 +5,19 @@ format: html
 editor: visual
 ---
 
-This is a test run of using Quarto
+This is a test run of using Quarto and practicing in-line coding.
 
 ```{r}
+#| label: setup
+#| include: false
 
+#Load Libraries
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(palmerpenguins)
+
+penguin_data <- penguins
 ```
+
+The dataset contains observations of `r n_distinct(penguin_data$species)` species of penguin. In the dataset, `r nrow(penguin_data)` individual penguins across the `r n_distinct(penguin_data$island)` islands were recorded.
