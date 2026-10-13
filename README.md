@@ -35,6 +35,6 @@ Thesis data design
 Quarto Submissions
 * [Week 6 Quarto Class Practice](https://01a11368-0754-018c-ea5a-ce8440fc4a66.share.connect.posit.cloud/)
 * [Week 6 Quarto Submission](https://01a1133d-59e3-62e9-d795-fcd93422cd05.share.connect.posit.cloud/)
-* [Week 7 Quarto Submission](https://01a136ef-906c-71df-473a-3f99e7b321e5.share.connect.posit.cloud/)
+* [Week 7 Quarto Submission](https://01a13734-21d9-7d46-bd41-5f2642e68e37.share.connect.posit.cloud/)
  
  *Last edited by Nick Mattson on 10-13-2026*
