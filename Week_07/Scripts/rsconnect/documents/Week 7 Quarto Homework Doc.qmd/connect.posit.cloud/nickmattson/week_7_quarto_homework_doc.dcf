@@ -1,0 +1,12 @@
+name: week_7_quarto_homework_doc
+title: Week 7 Quarto Homework Doc
+username: nickmattson
+account: nickmattson
+server: connect.posit.cloud
+hostUrl: https://api.connect.posit.cloud/v1
+appId: 01a136ef-906c-71df-473a-3f99e7b321e5
+bundleId:
+url: https://connect.posit.cloud/nickmattson/content/01a136ef-906c-71df-473a-3f99e7b321e5
+version: 1
+asMultiple: FALSE
+asStatic: TRUE

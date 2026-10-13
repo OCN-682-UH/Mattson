@@ -1,0 +1,199 @@
+---
+title: "Week 7 Map Homework"
+author: "Nick Mattson"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show code"
+theme: yeti
+editor: visual
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: Libraries Setup
+#| results: hide
+
+#Load Libraries
+library(tidyverse)
+library(tidytuesdayR)
+library(here)
+library(ggplot2)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+
+```
+
+Step one is to load all the necessary libraries.
+
+```{r}
+#| label: Dataset Check
+#| results: hide
+
+#let's use the cat dataset for this map
+tuesdata <- tidytuesdayR::tt_load('2023-01-31') #create data object from tidy tuesday library
+
+#extract the cat data
+cats_uk <- tuesdata$cats_uk
+cats_uk_reference <- tuesdata$cats_uk_reference
+
+#data structure check
+head(cats_uk)
+head(cats_uk_reference)
+```
+
+My goal is to use the uk_cats dataset to project locations over the United Kingdom.
+
+```{r}
+#| label: Creating Basemap Object
+#| fig-cap: Test Basemap Projection
+#| results: hide
+
+#create spatial object of the United Kingdom to project points over
+
+uk_map <- ne_countries(scale = "medium", country = "United Kingdom", returnclass = "sf")
+
+#visual check
+ggplot(uk_map) +
+  geom_sf(fill = "lightgrey",
+          color = "white") +
+  theme_void()
+
+#structure check
+st_crs(uk_map)
+```
+
+My first step is to make an sf object of the United Kingdom as a basemap. I do a quick visual check to make sure it projects correctly in ggplot. The result looks good. A structure check confirms the correct coordinate system.
+
+```{r}
+#| label: Points data as sf object
+#| fig-cap: Test Point Map
+
+#use st to sf function to create sf object of data points
+
+cats_uk_sf <- st_as_sf(
+  cats_uk, 
+  coords = c("location_long", "location_lat"), 
+  crs = 4326)
+
+#visual overlay of points on basemap
+
+ggplot(uk_map)+
+  geom_sf(fill = "lightgrey",
+          color = "white")+
+  geom_sf(data = cats_uk_sf, color = "blue", size = 2, alpha = 0.7)+
+  theme_minimal()
+```
+
+Next I want to take the coordinate data from the uk cats dataset and convert those observations into point data that I can project on my map. I use the st_as_sf function to turn the csv data into an sf object. I then project the data over my UK basemap to see if it looks good...
+
+Wow! All of the cats live in Devon and Cornwall! I need to make my basemap smaller.
+
+```{r}
+#| label: Making a Smaller Basemap
+#| fig-cap: Test County Map
+
+#pull the county data as an sf object
+uk_counties <- ne_states(country = "United Kingdom", returnclass = "sf")
+
+#filter counties to just the two I want to make new basemap
+devon_and_cornwall <- uk_counties |>
+  filter(name %in% c("Devon","Cornwall"))
+
+
+#test projection on my smaller sf basemap
+ggplot(devon_and_cornwall)+
+  geom_sf(fill = "lightgrey",
+          color = "white")+
+  geom_sf(data = cats_uk_sf, color = "blue", size = 2, alpha = 0.7)+
+  theme_minimal()
+```
+
+Wow, all the cats actually just live in Cornwall. We could have avoided this by naming it cornwall_cats rather than uk_cats.
+
+```{r}
+#| label: Literally a basemap of Cornwall
+#| fig-cap: Test Cornwall Map
+
+literally_just_cornwall <- uk_counties |>
+  filter(name == "Cornwall")
+
+#test projection again on the map
+ggplot(literally_just_cornwall)+
+  geom_sf(fill = "lightgrey",
+          color = "white")+
+  geom_sf(data = cats_uk_sf, color = "blue", size = 2, alpha = 0.7)+
+  theme_minimal()
+
+```
+
+Now let's make a nice pretty map with labels and a pleasing color scheme.
+
+```{r}
+#| label: A final map
+#| fig-cap: Cats in Cornwall, Take 1
+#| out-width: "125%"
+
+#map with different colors for different cats, on a nice background
+ggplot(literally_just_cornwall)+
+  geom_sf(fill = "lightgrey",
+          color = "black")+
+  geom_sf(data = cats_uk_sf, aes(color = tag_id), size = 2, alpha = 0.7  )+labs(title = "The Wandering Cats of Cornwall",caption = "Data from tidytuesdayR package")+
+  scale_color_discrete(type = "plasma",guide = "none")+
+  theme(panel.background = element_rect(fill = "lightblue"),
+        plot.title = element_text(size = 16,face = "bold"),
+        plot.caption = element_text(size = 8,face = "italic"))
+  
+
+
+```
+
+This map is unfortunately a mess. With over 100 cats tagged in the dataset, it's impossible to get a color scale that shows each cat on the map. The resulting layout is highly confusing. To make something that is visually understandable, I am going to artificially condense the cats point dataset so it only filters the locations of eight individual cats.
+
+```{r}
+#| label: Creating a data subset for a more digestible map
+#| fig-cap: Subset of Cornwall Cats
+
+#use filter function on cat points data to select eight individual felines
+just_eight_cats_from_cornwall <- cats_uk_sf |>
+  filter(tag_id %in% c("Ares","Indie-Tag","Tigger-Tag","Balu-Tag","Coco","Alfie-Tag","Carrots-Tag","Friday"))
+
+```
+
+This code chunk above selects just eight kitties, much easier to visualize on a map display.
+
+```{r}
+#| label: A final map!
+#| fig-cap: Cats in Cornwall revised
+#| out-width: "125%"
+
+#The same map as above with only the eight selected cats
+ggplot(literally_just_cornwall)+
+  geom_sf(fill = "lightgrey",
+          color = "black")+
+  geom_sf(data = just_eight_cats_from_cornwall, aes(color = tag_id), size = 2, alpha = 0.7  )+labs(title = "The Wandering Cats of Cornwall",
+                              subtitle = "Map of Cornwall County,England",
+                              caption = "Data from tidytuesdayR package")+
+  scale_color_viridis_d(option = "turbo",name = "Cat Name",labels = c("Ares","Balu","Carrots","Coco","Friday","Alfie","Indie","Tigger"))+
+  theme(panel.background = element_rect(fill = "lightblue"),
+        plot.title = element_text(size = 16,face = "bold"),
+        plot.subtitle = element_text(size = 12),
+        plot.caption = element_text(size = 8,face = "italic"))
+```
+
+The final map has a discernible legend, and the color scheme has been changed so the cat points are more distinct. Realistically, this dataset would be best projected at a city or even neighborhood level. Even within a small county, it is difficult to get more than just a general sense of where the cats are located.
+
+```{r}
+#| label: saving output image as jpeg file
+
+#use here function to save to output folder
+ggsave(here("Week_07","Outputs","cornwall_cat_map.png"))
+
+#save my edited dataframe as a csv as well
+write.csv(just_eight_cats_from_cornwall,file=here("Week_07","Outputs","cornwall_cats_subset.csv"))
+```
+
+Finally I will save my outputs to the correct folder for uploading to GitHub.
