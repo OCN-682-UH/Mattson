@@ -43,6 +43,9 @@ cats_uk_reference <- tuesdata$cats_uk_reference
 #data structure check
 head(cats_uk)
 head(cats_uk_reference)
+
+#save cat data
+write.csv(cats_uk,file=(here("Week_07","Data","cats_uk.csv")))
 ```
 
 My goal is to use the uk_cats dataset to project locations over the United Kingdom.
@@ -178,6 +181,9 @@ ggplot(literally_just_cornwall)+
                               subtitle = "Map of Cornwall County,England",
                               caption = "Data from tidytuesdayR package")+
   scale_color_viridis_d(option = "turbo",name = "Cat Name",labels = c("Ares","Balu","Carrots","Coco","Friday","Alfie","Indie","Tigger"))+
+  annotation_scale(location = "tl",
+                   width_hint = 0.4)+
+  annotation_north_arrow(location = "br")+
   theme(panel.background = element_rect(fill = "lightblue"),
         plot.title = element_text(size = 16,face = "bold"),
         plot.subtitle = element_text(size = 12),
