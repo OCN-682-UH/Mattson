@@ -56,8 +56,8 @@ head(mortgagedata_long) #data check
 ##ggplot stacked bar chart
 ggplot(mortgagedata_long,aes(x=Year,y=Total,fill=Loan_Type)) +
   geom_col(position="stack",width=0.7)+ #stacked bar chart to show breakdown
-  scale_fill_manual(values=c("New_Prime_Mortgages"="navy", #blue is peaceful
-                             "New_Subprime_Mortgages"="red"), #color it red so people know it's the bad thing
+  scale_fill_manual(values=c("navy", #blue is peaceful
+                             "red"), #color it red so people know it's the bad thing
                     labels = c("Prime",
                                "Subprime"))+
   labs(title="Subprime Mortgage Share in US Housing Market",
@@ -67,9 +67,9 @@ ggplot(mortgagedata_long,aes(x=Year,y=Total,fill=Loan_Type)) +
        fill = "Loan Type",
        caption = "Data from 2008 National Housing Report, Harvard University")+
   theme(plot.title = element_text(size = 16,face = "bold"),
-plot.subtitle = element_text(size = 12),
-axis.title = element_text(size=10),
-plot.caption = element_text(size = 8,face = "italic"))
+        plot.subtitle = element_text(size = 12),
+        axis.title = element_text(size=10),
+        plot.caption = element_text(size = 8,face = "italic"))
 
 #use here function to save to output folder
 ggsave(here("GoodPlotBadPlot","Outputs","subprime_share_plot.png"))         
@@ -106,8 +106,8 @@ A1 <- ggplot(Foreclosures_2008,
            y=Number,
            fill=Loan.Type))+
   geom_col(position="stack",width=0.7,)+ #stack again seems like best visual
-  scale_fill_manual(values=c("Prime"="navy",
-                             "Subprime"="red"))+ #red still equals bad
+  scale_fill_manual(values=c("navy",
+                             "red"))+ #red still equals bad
   theme(axis.title=element_text(size=12),
         axis.title.x=element_blank(), #block this element from showing
         axis.text.x = element_text(angle = 45, hjust = 1))+
@@ -185,16 +185,13 @@ Bear_Plot <- ggplot(Bear_Stearns_Stock,
   labs(title = "Bear Stearns 2008 Q3 Investment Prospectus",
        subtitle = "5 Year Stock Trends (Don't Look Too Hard! Only Vibes!!!)",
        caption = "data from https://www.google.com/what_is_bear_stearns_stock_price")+
-  theme(panel.background = element_rect(fill="transparent",color=NA),
-        plot.background = element_rect(fill="transparent",color=NA),
-        legend.background = element_rect(fill="transparent"),
-        text = element_text(family="Comic Sans MS",color="magenta"),
+  theme(text = element_text(family="Comic Sans MS",color="magenta"),
         plot.title = element_text(size = 18,face = "bold"),
         plot.subtitle = element_text(size = 14,face = "italic"),
         plot.caption = element_text(size = 11,face = "italic"),
         )
 #Minions are the pinnacle of professionalism
-Minions_Plot <- ggbackground(Bear_Plot,"Minions.jpg",alpha=0.2)
+Minions_Plot <- ggbackground(Bear_Plot,"Minions.jpg",alpha=0.25)
 
 Minions_Plot
 
