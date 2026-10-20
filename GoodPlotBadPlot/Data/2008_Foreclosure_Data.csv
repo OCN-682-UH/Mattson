@@ -1,0 +1,25 @@
+Month,Loan Type,Number
+January,Prime,10604
+January,Subprime,11942
+February,Prime,16096
+February,Subprime,16487
+March,Prime,21832
+March,Subprime,18148
+April,Prime,20021
+April,Subprime,15936
+May,Prime,21965
+May,Subprime,17066
+June,Prime,21579
+June,Subprime,16308
+July,Prime,22374
+July,Subprime,17551
+August,Prime,27998
+August,Subprime,19722
+September,Prime,25082
+September,Subprime,19088
+October,Prime,22495
+October,Subprime,18474
+November,Prime,26808
+November,Subprime,20278
+December,Prime,25456
+December,Subprime,18371

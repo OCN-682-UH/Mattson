@@ -1,0 +1,132 @@
+---
+title: "The Bad Old Days"
+author: "Nick Mattson"
+editor: visual
+format:
+  html:
+    code-fold: true
+    code-summary: "Show code"
+theme: darkly
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: Libraries Setup
+#| results: hide
+
+#Load Libraries
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(ggforce)
+library(patchwork)
+```
+
+I was a high school sophomore when the 2008 Great Recession occurred. While old enough to metabolize the big headlines, I was still to young to fully understand what had occurred, and what the ramifications would be. My general understanding was that a lot of grown-ups had lost a lot of money, and that it was better to be in school at the moment.
+
+Learning about the recession as an adult has been revealing. Wall-Streeters may dress up in suits and cloak their day-to-day work in layers of incomprehensible jargon, but the absolute bacchanalia of the 2000s subprime mortgage market had traders behaving with the subtlety of a group of sharks converging on a chum bucket. The central commodity here was mortgages for people who couldn't afford homes. The industry created millions of crappy home loans and stuffed them into all sorts of financial commodities to be bought, sold, and traded. At some point in 2008 everyone collectively realized these loans weren't worth the paper they were printed on, and over a trillion dollars fell out of the economy overnight.
+
+```{r}
+#| Label: Subprime Loans in Housing Market(Good Plot)
+#| out-width: "125%"
+#| fig-cap: Figure 1
+
+#pull in the data
+mortgagedata <- read.csv(here("GoodPlotBadPlot","Data","Subprime_Mortgage_Data.csv"))
+head(mortgagedata) #data check
+
+#pivot to long data for easier rendering in ggplot
+mortgagedata_long <- mortgagedata |>
+  pivot_longer(
+    cols = c(New_Subprime_Mortgages,New_Prime_Mortgages), 
+    names_to = "Loan_Type", 
+    values_to = "Total"
+  ) |> 
+  mutate(Year = as.factor(Year))#turn year into a factor
+
+head(mortgagedata_long)
+
+##ggplot bar chart
+ggplot(mortgagedata_long,aes(x=Year,y=Total,fill=Loan_Type)) +
+  geom_col(position="stack",width=0.7)+
+  scale_fill_manual(values=c("New_Prime_Mortgages"="navy","New_Subprime_Mortgages"="red"),labels = c("New_Prime_Mortgages"="Prime","New_Subprime_Mortgages"="Subprime"))+
+  labs(title="Subprime Mortgage Share in Housing Market",
+       subtitle = "As Proportion of Total New Mortgages, 2001-2007",
+        x = "Year",
+        y = "Total Value ($ Trillion)",
+       fill = "Loan Type",
+       caption = "Data from 2008 National Housing Report, Harvard University")+
+  theme(plot.title = element_text(size = 16,face = "bold"),
+plot.subtitle = element_text(size = 12),
+axis.title = element_text(size=10),
+plot.caption = element_text(size = 8,face = "italic"))
+                                                                                               
+```
+
+As you can see in the chart above, subprime loans, which made up less than a fifth of all new mortgages in 2001, comprised close to half of new mortgages in 2005. The spike in 2003 is due to the Federal Reserve dropping interest rates to near historic levels, which created a rush of new home buyers and catalyzed the subprime market by making it easier than ever to obtain cheap credit. By 2007, subprime loans had begun to default enough to contract the overall U.S. housing market, despite non-prime mortgages continuing to be generated at a similar amount.
+
+```{r}
+#| Label: Market Performance Versus Foreclosures
+#| out-width: "125%"
+#| fig-cap: Figure 2
+#| fig-height: 10
+#| fig-width: 8
+
+#pull in datasets
+SP500_2008 <- read.csv(here("GoodPlotBadPlot","Data","SP500_Data_2007_2009_Long.csv"))|>
+  filter(Year==2008,)|> #select only 2008
+  mutate(Month=factor(Month, levels=month.name))|> #order months sequentially
+  mutate(Index.Value=as.numeric(Index.Value)) #make values numeric
+head(SP500_2008) #S&P500 Dataset
+
+Foreclosures_2008 <- read.csv(here("GoodPlotBadPlot","Data","2008_Foreclosure_Data.csv"))|>
+  mutate(Month = factor(Month, levels = month.name))
+         
+head(Foreclosures_2008)
+
+#ggplot bar chart on facet grid with line chart
+A1 <- ggplot(Foreclosures_2008,
+       aes(x=Month,
+           y=Number,
+           fill=Loan.Type))+
+  geom_col(position="stack",width=0.7,)+
+  scale_fill_manual(values=c("Prime"="navy",
+                             "Subprime"="red"))+
+  theme(axis.title=element_text(size=12),
+        axis.title.x=element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1))+
+  labs(y="Number of Foreclosures",
+       fill="Loan Type")
+
+A2 <- ggplot(SP500_2008,
+        aes(x=Month,
+            y=Index.Value,
+            group=1))+
+  geom_line(color="orange",linewidth=1.2)+
+  scale_y_continuous(limits = c(750,1500),breaks=(seq(750,1500,by=250)))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  labs(y="S&P500 Index")+
+  theme(axis.title=element_text(size=12))
+  
+Patchwork_Plot <- A1 / A2
+
+Patchwork_Plot+
+  plot_annotation(title="The Subprime Bubble Onset Delay",
+                  subtitle="Foreclosures Versus S&P500 Performance, 2008",
+                  caption="Data from CNBC and FHFA Foreclosure Prevention Report, 2008",
+                  theme=theme(plot.title = element_text(size = 16,face = "bold"),
+            plot.subtitle = element_text(size = 12),
+            plot.caption = element_text(size = 8,face = "italic")))
+  
+  
+
+
+```
+
+This chart shows how a marked rise in foreclosures during the early part of 2008 signaled the impending housing bubble, as homeowners could no longer afford their mortgage payments. Tellingly, a greater and greater share of prime mortgages defaulted and entered foreclosure over the year. However, it took until October 2008 for the stock market at large to recognize the crisis and for investor confidence to completely crater.
+
+There was, however, one firm that served as the canary in the coal mine
+
+<img src="Images/BearStearns.jpg" alt="Bear Stearns" width="300">
