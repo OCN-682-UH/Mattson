@@ -1,0 +1,165 @@
+---
+title: "Functions Homework"
+author: "Nick Mattson"
+editor: visual
+format:
+  html:
+    code-fold: true
+    code-summary: "Show code"
+theme: yeti
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: Libraries setup
+#| results: hide
+
+#Load Libraries
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(kableExtra)
+
+```
+
+My hope is to create usable functions that I can plug my summer research data into, as I work on writing my thesis. I study community botany, and my research consists of reading field plots to determine relative plant species cover. This summer I read 50 plots in an area of Hawaii Volcanoes National Park that had been subjected to wildfire in 2000. In each rectangular 30x20m plot, I read three parallel transect lines bisecting the plot lengthwise, with each line spaced 5m apart. Along each transect line I would record vegetation presence by species at intervals of 1m, totalling 93 observation points per plot. At each point I would record any species intersecting the point. This meant multiple species could be logged at the same point. This transect information was then entered into a csv logging the specific plot point, species, and vegetation type, similar to the table below.
+
+```{r}
+#| label: example dataframe
+#| out-width: "75%"
+#| tbl-cap: Table 1
+
+
+#load in my data
+burnplot1_augment <- read.csv(here("Week_08","Data","BurnPlotAugment1_Understory.csv"))
+
+burnplot1_augment_table <- burnplot1_augment |>
+  #only 20 rows as example,selected from tail to show more species type examples
+  tail(20)|>
+  kbl(caption="Example Plot Data Structure",
+      col.names = c("Plot ID", "Times Burned", "Augmentation","Point ID","Species Code","Veg Type (No Repeats)","Veg Type (Repeats"),
+      align = "lcccccc")|>
+  kable_styling(full_width=FALSE)|>
+  row_spec(0,bold=TRUE)|>
+  kable_classic()
+
+burnplot1_augment_table
+```
+
+My first function is designed to just scan through the csv I enter, tally all of the Species Code counts, and spit out a list of the top ten most common species, which then renders a bar chart showing the ten most common species visually.
+
+```{r}
+#| label: a simple tally/plot function
+#| results: hide
+#| eval: true
+
+SpeciesCounter <- function(data,column=Taxon_Code) {
+  #Step 1: create dataframe for output. Function requires dataframe and a specific column to locate (in curly-curly). If no column selected, function defaults to taxon code
+  top10 <- data |>
+    #performs count of values in specified species column
+    count({{column}},sort = TRUE) |>
+    #takes the count object,creates a top 10 list, doesn't allow 10th place ties
+    slice_max(n,n=10,with_ties = FALSE) 
+  
+  #Step 3: ggplot output
+  #for x,take the flexible string from step 1 and reorder them from most-least numerous. For y-axis,scale values depending on count from n
+  top10chart <- ggplot(top10,aes(x=reorder({{column}},-n),y=n))+
+    geom_col(fill="grey")+
+    labs(title = "Ten Most Common Species in Plot",
+         x = "Taxon Code",
+         y = "Count")+
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+  print(top10chart)
+  
+  
+    return(top10) #returns list of top 10 most common species
+}
+
+#testing output
+burnplot1_augment_top10 <-SpeciesCounter(burnplot1_augment)
+
+#testing another dataframe from a different plot
+burnplot5_noaugment <- read.csv(here("Week_08","Data","BurnPlotNoAugment5_Understory.csv"))
+
+burnplot5_noaugment_top10 <- SpeciesCounter(burnplot5_noaugment)
+```
+
+The function "SpeciesCounter" returns a top 10 list as well as printing a basic bar chart to visualize the species makeup for each plot.
+
+```{r}
+#| label: example top 10 table
+#| out-width: "75%"
+#| tbl-cap: Table 1
+
+top10table <- kbl(burnplot5_noaugment_top10,caption ="Top 10 Species in Plot",
+      col.names = c("Taxon Code","Count"),
+      align = "lc")|>
+  kable_styling(full_width=FALSE)|>
+  row_spec(0,bold=TRUE)|>
+  kable_classic()
+
+top10table
+```
+
+```{r}
+#| label: creating corresponding understory data from overstory data
+#| results: hide
+
+#read in my data
+burnplot2_augment_overstory <- read_csv(here("Week_08","Data","BurnPlotAugment2_Overstory.csv"))
+
+burnplot2_augment_understory <- read_csv(here("Week_08","Data","BurnPlotAugment2_Understory.csv"))
+
+#create function to match overstory plot points with understory
+Shady <- function(overstory_data,
+                  understory_data,
+                  overstory_column=Taxon_Code) {
+  overstory_points <- overstory_data|>
+    #this step filters out all the "NoCan" values (for no canopy)
+    filter({{overstory_column}} !="NoCan")|>
+    #select based on point ID, then drop duplicates
+    select(Point_ID)|>
+    distinct()
+  
+  #Inner join to understory dataset. Count all rows where Point_ID matches, then return a list of all the understory rows fitting the condition
+  understory_points <- understory_data |>
+    inner_join(overstory_points,by="Point_ID")
+  
+  return(understory_points)
+}
+
+#Test Run
+burnplot2_augment_canopy_understory_points <- Shady(burnplot2_augment_overstory,burnplot2_augment_understory)
+
+#Test on second dataset,loading in data here
+unburnplot8_understory <- read_csv(here("Week_08","Data","UnburnPlot8_Understory.csv"))
+unburnplot8_overstory <- read.csv(here("Week_08","Data","UnburnPlot8_Overstory.csv"))
+
+#running the function on different plot data
+unburnplot8_canopy_understory_points <- Shady(unburnplot8_overstory,unburnplot8_understory)
+
+write.csv(unburnplot8_canopy_understory_points,file=(here("Week_08","Outputs","UnburnPlot8_Canopy_Understory_Points")))
+```
+
+My second function is a bit more complex but performs a task that will be very useful in my data analysis. One thing I noticed during my research is that the species composition found under canopy is different than that found in open sun. As part of my plot reading, I also recorded whether a given point had overstory. This means I have two separate dataframes for overstory and understory, but with point IDs shared by both. I want a function that will take the overstory points dataframe, select only for points with canopy, then compare that list against the understory dataframe to isolate only understory species points located directly under canopy. The result is a list of all the understory points in the plot found under canopy.
+
+```{r}
+#| label: example understory points table
+#| out-width: "75%"
+#| tbl-cap: Table 2
+
+unburnplot_8_canopy_understory_points_table <- kbl(unburnplot8_canopy_understory_points,caption ="Understory Species Points with Canopy Overhead",
+      col.names = c("Plot ID","Times Burned","Augmentation","Point ID","Species Code","Veg Type (No Repeats)","Veg Type (Repeats)"),
+      align = "lcccccc")|>
+  kable_styling(full_width=FALSE)|>
+  row_spec(0,bold=TRUE)|>
+  kable_classic()
+
+unburnplot_8_canopy_understory_points_table
+```
+
+Here is an example output with all of the understory points that satisfied this condition. I know it worked by cross-checking all of the overstory points in my csv against this list, and I can confirm it correctly selected all the necessary points.
