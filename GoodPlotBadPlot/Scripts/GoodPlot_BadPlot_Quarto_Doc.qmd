@@ -70,7 +70,9 @@ ggplot(mortgagedata_long,aes(x=Year,y=Total,fill=Loan_Type)) +
 plot.subtitle = element_text(size = 12),
 axis.title = element_text(size=10),
 plot.caption = element_text(size = 8,face = "italic"))
-                                                                                               
+
+#use here function to save to output folder
+ggsave(here("GoodPlotBadPlot","Outputs","subprime_share_plot.png"))         
 ```
 
 As you can see in the chart above, subprime loans, which made up less than a fifth of all new mortgages in 2001, comprised close to half of new mortgages in 2005. The spike in 2003 is due to the Federal Reserve dropping interest rates to near historic levels, which created a rush of new home buyers and catalyzed the subprime market by making it easier than ever to obtain cheap credit. By 2007, subprime loans had begun to default enough to contract the overall U.S. housing market, despite prime mortgages continuing to be generated at a similar amount.
@@ -135,9 +137,8 @@ Patchwork_Plot+
             plot.subtitle = element_text(size = 12),
             plot.caption = element_text(size = 8,face = "italic")))
   
-  
-
-
+#use here function to save to output folder
+ggsave(here("GoodPlotBadPlot","Outputs","2008_Subprime_v_SP500.jpg"))
 ```
 
 This chart shows how a marked rise in foreclosures during the early part of 2008 signaled the impending housing bubble, as greater numbers of homeowners could no longer afford their mortgage payments. Tellingly, a greater and greater share of prime mortgages defaulted and entered foreclosure over the year. However, it took until October 2008 for the stock market at large to recognize the crisis and for investor confidence to completely crater.
@@ -159,7 +160,7 @@ Because the demise of Bear Stearns was so rapid and so infamous, I thought it wo
 #bring in the data
 Bear_Stearns_Stock <- read.csv(here("GoodPlotBadPlot","Data","Bear_Stearns_Stock.csv"))|>
   mutate(Date=ymd(Date))|>
-  arrange(Date)#use lubridate to convert to dates
+  arrange(Date)
 
 head(Bear_Stearns_Stock)
 
@@ -181,8 +182,8 @@ Bear_Plot <- ggplot(Bear_Stearns_Stock,
     name="Stock Price ($)",
     low="limegreen",
     high="red")+
-  labs(title = "Bear Stearns Q3 Investment Prospectus",
-       subtitle = "This is a Vibes-Based Approach!!!",
+  labs(title = "Bear Stearns 2008 Q3 Investment Prospectus",
+       subtitle = "5 Year Stock Trends (Don't Look Too Hard! Only Vibes!!!)",
        caption = "data from https://www.google.com/what_is_bear_stearns_stock_price")+
   theme(panel.background = element_rect(fill="transparent",color=NA),
         plot.background = element_rect(fill="transparent",color=NA),
@@ -197,4 +198,6 @@ Minions_Plot <- ggbackground(Bear_Plot,"Minions.jpg",alpha=0.2)
 
 Minions_Plot
 
+#use here function to save to output folder
+ggsave(here("GoodPlotBadPlot","Outputs","Minions_Plot.jpg"))
 ```
