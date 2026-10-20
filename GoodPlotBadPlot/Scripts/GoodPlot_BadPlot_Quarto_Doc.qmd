@@ -77,6 +77,17 @@ ggsave(here("GoodPlotBadPlot","Outputs","subprime_share_plot.png"))
 
 As you can see in the chart above, subprime loans, which made up less than a fifth of all new mortgages in 2001, comprised close to half of new mortgages in 2005. The spike in 2003 is due to the Federal Reserve dropping interest rates to near historic levels, which created a rush of new home buyers and catalyzed the subprime market by making it easier than ever to obtain cheap credit. By 2007, subprime loans had begun to default enough to contract the overall U.S. housing market, despite prime mortgages continuing to be generated at a similar amount.
 
+::: {.callout-tip collapse="true"}
+## Why I think this is a good plot
+
+- The plot condenses the information I want the reader to obtain and shows it visually, mainly that subprime mortgages as a percentage of total mortgages was rising in the years before the 2008 crash.
+
+- The labels and titles explain without being overly wordy.
+
+- Color choices are appropriate and not visually deceptive.
+
+:::
+
 ```{r}
 #| Label: Market Performance Versus Foreclosures
 #| out-width: "125%"
@@ -143,6 +154,19 @@ ggsave(here("GoodPlotBadPlot","Outputs","2008_Subprime_v_SP500.jpg"))
 
 This chart shows how a marked rise in foreclosures during the early part of 2008 signaled the impending housing bubble, as greater numbers of homeowners could no longer afford their mortgage payments. Tellingly, a greater and greater share of prime mortgages defaulted and entered foreclosure over the year. However, it took until October 2008 for the stock market at large to recognize the crisis and for investor confidence to completely crater.
 
+::: {.callout-tip collapse="true"}
+## Why I think this is a good plot
+
+- Conveys my main message through the two graphs. Though foreclosures rose through 2008, the stock market did not reflect the growing crisis until later in the year when the bubble definitively burst.
+
+- X-axis is shared by both graphs, allowing for the two trends to be visualized together
+
+- Labels are clear and explanatory
+
+- Colors are clear and not visually deceptive
+
+:::
+
 There was, however, one firm that served as the canary in the coal mine...
 
 <img src="BearStearns.jpg" alt="Bear Stearns" width="500"/>
@@ -198,3 +222,18 @@ Minions_Plot
 #use here function to save to output folder
 ggsave(here("GoodPlotBadPlot","Outputs","Minions_Plot.jpg"))
 ```
+
+::: {.callout-caution collapse="true"}
+## Why I know this is a bad plot
+
+- The y-axis is conspicuously reversed to imply that a plummeting stock is actually a hot item in the market.
+
+- To further enhance the visual deception, the color bars have been reversed. Red is intuitively negative while green is the literal color of money. This makes the stock seem like it's doing great.
+
+- The x and y labels are left simply as "x" and "y"
+
+- The data source is a Google search query
+
+- It has been rendered in magenta Comic Sans font, with a background panel of Minions.
+
+:::

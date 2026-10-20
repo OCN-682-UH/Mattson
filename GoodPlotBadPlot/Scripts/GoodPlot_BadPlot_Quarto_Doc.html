@@ -179,6 +179,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>As you can see in the chart above, subprime loans, which made up less than a fifth of all new mortgages in 2001, comprised close to half of new mortgages in 2005. The spike in 2003 is due to the Federal Reserve dropping interest rates to near historic levels, which created a rush of new home buyers and catalyzed the subprime market by making it easier than ever to obtain cheap credit. By 2007, subprime loans had begun to default enough to contract the overall U.S. housing market, despite prime mortgages continuing to be generated at a similar amount.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why I think this is a good plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The plot condenses the information I want the reader to obtain and shows it visually, mainly that subprime mortgages as a percentage of total mortgages was rising in the years before the 2008 crash.</p></li>
+<li><p>The labels and titles explain without being overly wordy.</p></li>
+<li><p>Color choices are appropriate and not visually deceptive.</p></li>
+</ul>
+</div>
+</div>
+</div>
 <div class="cell" data-label="Market Performance Versus Foreclosures">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -249,6 +269,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>This chart shows how a marked rise in foreclosures during the early part of 2008 signaled the impending housing bubble, as greater numbers of homeowners could no longer afford their mortgage payments. Tellingly, a greater and greater share of prime mortgages defaulted and entered foreclosure over the year. However, it took until October 2008 for the stock market at large to recognize the crisis and for investor confidence to completely crater.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why I think this is a good plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Conveys my main message through the two graphs. Though foreclosures rose through 2008, the stock market did not reflect the growing crisis until later in the year when the bubble definitively burst.</p></li>
+<li><p>X-axis is shared by both graphs, allowing for the two trends to be visualized together</p></li>
+<li><p>Labels are clear and explanatory</p></li>
+<li><p>Colors are clear and not visually deceptive</p></li>
+</ul>
+</div>
+</div>
+</div>
 <p>There was, however, one firm that served as the canary in the coal mine…</p>
 <p><img src="BearStearns.jpg" alt="Bear Stearns" width="500"></p>
 <p>On March 14th, 2008, Wall Street giant Bear Stearns lost over half of its stock value in a single day, falling from above $61/share to a little over $30/share. Though this was the single most effective day they had torching their value, the firm had been wobbling for some time before the bottom fell out. Bear was highly active in the subprime housing market and in its profligate greed, it got out over its skis and became massively over-leveraged. When the housing market began to slide in 2007, Bear encountered severe <em>solvency</em> problems and was one of the first firms to go. When they crashed–Hindenburg-like–onto the floor of the stock exchange, most other traders reacted with a mix of bemusement and schadenfreude. What they failed to realize was that they were up to their necks in the same junk that cratered Bear Stearns. Months later, the slide would envelop them too.</p>
@@ -307,6 +348,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use here function to save to output folder</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">"GoodPlotBadPlot"</span>,<span class="st">"Outputs"</span>,<span class="st">"Minions_Plot.jpg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Why I know this is a bad plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The y-axis is conspicuously reversed to imply that a plummeting stock is actually a hot item in the market.</p></li>
+<li><p>To further enhance the visual deception, the color bars have been reversed. Red is intuitively negative while green is the literal color of money. This makes the stock seem like it’s doing great.</p></li>
+<li><p>The x and y labels are left simply as “x” and “y”</p></li>
+<li><p>The data source is a Google search query</p></li>
+<li><p>It has been rendered in magenta Comic Sans font, with a background panel of Minions.</p></li>
+</ul>
+</div>
+</div>
 </div>
 
 </main>
