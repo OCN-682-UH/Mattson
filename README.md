@@ -39,4 +39,5 @@ Quarto Submissions
 * [Week 7 Quarto Submission](https://01a13734-21d9-7d46-bd41-5f2642e68e37.share.connect.posit.cloud/)
 * [Good Plot Bad Plot](https://01a157d4-052e-999d-9b83-4e6c574b4df9.share.connect.posit.cloud/)
 * [Week 8 Quarto Submission](https://01a15b5f-6a9f-4243-6d6e-24c46f9b41d5.share.connect.posit.cloud/)
+
  *Last edited by Nick Mattson on 10-20-2026*
