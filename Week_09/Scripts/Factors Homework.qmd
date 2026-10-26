@@ -93,7 +93,12 @@ ggplot(clean_intertidal_data,aes(x = Quadrat,
   geom_boxplot(alpha = 0.7, show.legend = FALSE)+
   #plot looks better with x-labels for all plots
   facet_wrap(~ Site,axes = "all_x")+
+  #colorblind visual scheme
   scale_fill_viridis_d()+
+  #make x-labels upper case
+  scale_x_discrete(labels = c("Low",
+                              "Mid",
+                              "High"))+
   theme_minimal()+
   theme(strip.text = element_text(face = "bold"),
         plot.title = element_text(size = 20,
@@ -128,6 +133,9 @@ ggplot(clean_intertidal_data,aes(x = Quadrat,
   facet_wrap(~ Site,axes = "all_x")+
   scale_fill_viridis_d()+
   theme_minimal()+
+    scale_x_discrete(labels = c("Low",
+                     "Mid",
+                     "High"))+
   theme(strip.text = element_text(face = "bold"),
         plot.title = element_text(size = 20,
                                   face = "bold"),
@@ -162,6 +170,9 @@ ggplot(clean_intertidal_data,aes(x = Quadrat,
   geom_boxplot(alpha = 0.7, show.legend = FALSE)+
   facet_wrap(~ Site,axes = "all_x")+
   scale_fill_viridis_d()+
+  scale_x_discrete(labels = c("Low",
+                              "Mid",
+                              "High"))+
   theme_minimal()+
   theme(strip.text = element_text(face = "bold"),
         plot.title = element_text(size = 20,
