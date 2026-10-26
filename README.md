@@ -32,6 +32,7 @@ Thesis data design
 * [Week 6](https://github.com/OCN-682-UH/Mattson/tree/main/Week_06)
 * [Week 7](https://github.com/OCN-682-UH/Mattson/tree/main/Week_07)
 * [Week 8](https://github.com/OCN-682-UH/Mattson/tree/main/Week_08)
+* [Week 9](https://github.com/OCN-682-UH/Mattson/tree/main/Week_09)
 
 Quarto Submissions
 * [Week 6 Quarto Class Practice](https://01a11368-0754-018c-ea5a-ce8440fc4a66.share.connect.posit.cloud/)
@@ -39,5 +40,6 @@ Quarto Submissions
 * [Week 7 Quarto Submission](https://01a13734-21d9-7d46-bd41-5f2642e68e37.share.connect.posit.cloud/)
 * [Good Plot Bad Plot](https://01a157d4-052e-999d-9b83-4e6c574b4df9.share.connect.posit.cloud/)
 * [Week 8 Quarto Submission](https://01a15b5f-6a9f-4243-6d6e-24c46f9b41d5.share.connect.posit.cloud/)
+* [Week 9 Quarto Submission](https://01a17626-67cf-87b3-0c68-0f5a82137d2a.share.connect.posit.cloud/)
 
  *Last edited by Nick Mattson on 10-20-2026*
