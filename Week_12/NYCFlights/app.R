@@ -1,3 +1,5 @@
+###Week 12 Shiny App HW###
+
 library(shiny)
 library(tidyverse)
 library(scales)
@@ -142,7 +144,7 @@ observe({
   #constructing flight routes on map
   if (nrow(filtered_routes()) > 0) {
     routes <- filtered_routes()
-    for (i in seq_len(nrow(routes))) {
+    for (i in seq(nrow(routes))) {
       #draw polylines using lat/lon from each iteration of [i]
       proxy <- proxy |>
         addPolylines(
