@@ -24,8 +24,8 @@ destination_airports <- flights|>
 flight_routes <- flights|>
   #creates all unique flight combos
   count(origin,dest,name="flights_on_route")|>
-  #join origin coordinates
   
+  #join origin coordinates
   inner_join(airports|>
     #just columns I want
     select(faa,lat_origin = lat,lon_origin = lon),
