@@ -78,7 +78,7 @@ ui <- fluidPage(
   mainPanel(
     leafletOutput("airports_map",height = "600px")
   )
-),
+)
 )
 
 ###Part 3: Server Logic###
@@ -141,16 +141,16 @@ observe({
     clearMarkers() |>
     clearShapes()
   
-  #constructing flight routes on map
+  # Constructing flight routes on map
   if (nrow(filtered_routes()) > 0) {
     routes <- filtered_routes()
-    for (i in seq(nrow(routes))) {
-      #draw polylines using lat/lon from each iteration of [i]
+    for (i in seq_len(nrow(routes))) {
+      # Draw polylines using lat/lon from each iteration of [i]
       proxy <- proxy |>
         addPolylines(
           lng = c(routes$lon_origin[i], routes$lon_destination[i]),
           lat = c(routes$lat_origin[i], routes$lat_destination[i]),
-          weight = 1.5,
+          weight = 2,
           color = route_palette(routes$origin[i]),
           opacity = 0.4
         )
